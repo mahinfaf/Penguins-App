@@ -106,10 +106,20 @@ if df is not None:
                 st.success(f"Predicted **{target}**: `{prediction[0]:.2f}`")
 
         # ---------------------------------------------------------
-        # Step 4: Explanation Sentence
+      # ---------------------------------------------------------
+        # Step 4: Dynamic Explanation Sentence
         # ---------------------------------------------------------
         st.markdown("---")
-        st.info(
-            "**Model Usage & Risk:** This linear regression model predicts physical attributes of penguins (e.g., body mass) "
-            "based on structural measurements; if the model is inaccurate, researchers risks misidentifying growth patterns, species classifications, or environmental health indicators."
+        
+        # Dynamic context framing based on source file
+        dataset_name = uploaded_file.name if uploaded_file is not None else "penguins.csv"
+        
+        dynamic_statement = (
+            f"**Model Usage & Risk (`{dataset_name}`):** This linear regression model estimates **{target}** "
+            f"using **{feature1}** and **{feature2}** as predictor inputs. "
+            f"When its predictions are wrong, decisions relying on estimated **{target}** "
+            f"(such as operational planning, resource allocation, or scientific classifications) "
+            f"risk financial loss, misallocated effort, or faulty domain conclusions."
         )
+        
+        st.info(dynamic_statement)
